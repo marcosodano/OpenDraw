@@ -1,0 +1,77 @@
+{
+  "name": "opendraw",
+  "version": "1.0.0",
+  "description": "OpenDraw by Marco Sodano — A powerful vector diagramming workstation",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "cmd /c \"set ELECTRON_RUN_AS_NODE=&& electron .\"",
+    "dev": "cmd /c \"set ELECTRON_RUN_AS_NODE=&& electron . --dev\"",
+    "test:visio": "node scripts/test_visio_compatibility.js",
+    "version:check": "node scripts/release.js check",
+    "release:patch": "node scripts/release.js bump patch",
+    "release:minor": "node scripts/release.js bump minor",
+    "release:major": "node scripts/release.js bump major",
+    "privacy:audit": "node scripts/audit_privacy.js",
+    "privacy:audit:dist": "node scripts/audit_privacy.js --dist",
+    "build:portable": "node scripts/release.js check && node scripts/audit_privacy.js && cmd /c \"set CSC_IDENTITY_AUTO_DISCOVERY=false&& electron-builder --win portable --x64\" && node scripts/audit_privacy.js --dist"
+  },
+  "keywords": [
+    "diagram",
+    "opendraw",
+    "flowchart",
+    "drawing",
+    "vector"
+  ],
+  "author": "Marco Sodano",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^26.18.0"
+  },
+  "dependencies": {
+    "fabric": "^6.5.1",
+    "jszip": "^3.10.2"
+  },
+  "build": {
+    "appId": "com.opendraw.app",
+    "productName": "OpenDraw",
+    "copyright": "Copyright © 2026 Marco Sodano",
+    "asar": true,
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "!**/._*",
+      "!**/*.map",
+      "!Tests/**",
+      "!scripts/**",
+      "!0 - Old/**",
+      "!STATUS.md",
+      "!CHANGELOG.md",
+      "!RELEASE_GUIDE.md",
+      "!OpenDraw.bat",
+      "!OpenDraw.vbs",
+      "!debug_*.txt",
+      "!dist/**"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icons/icon.ico",
+      "requestedExecutionLevel": "asInvoker",
+      "signAndEditExecutable": true
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}",
+      "requestExecutionLevel": "user"
+    }
+  }
+}

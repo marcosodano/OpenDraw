@@ -1,0 +1,19 @@
+# Dependencies & Build Output
+node_modules/
+dist/
+*.exe
+*.sha256
+
+# Local Test Diagrams, Debug Logs & Legacy Archives (keep private / never publish)
+Tests/
+0 - Old/
+debug_*.txt
+STATUS.md
+
+# Local Windows Shortcuts / Launchers referencing local paths
+scripts/update_shortcut.ps1
+*.lnk
+
+# OS Junk
+Thumbs.db
+.DS_Store

@@ -1,0 +1,15 @@
+{
+  "name": "OpenDraw",
+  "author": "Marco Sodano",
+  "monogram": "MS",
+  "edition": "Standard Edition",
+  "version": "1.0.0",
+  "channel": "stable",
+  "build": "20261126.1",
+  "releaseDate": "2026-11-26",
+  "releaseNotes": [
+    "Established official SemVer 1.0.0 versioning displayed across Backstage Credits, Backstage sidebar, Help ribbon, and About dialog.",
+    "Added cohesive OpenDraw brand system (Dark, Light, Small optical titlebar icons, and multi-resolution Windows app icons).",
+    "Full Visio compatibility (.vsdx, .vsd, .vssx, .vss) with editable straight, orthogonal, and smooth curved connectors."
+  ]
+}

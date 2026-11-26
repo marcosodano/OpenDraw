@@ -1,0 +1,352 @@
+/**
+ * OpenDraw — Main Stylesheet
+ * 
+ * Global layout, reset, and CSS custom properties (theme).
+ */
+
+/* === CSS Custom Properties (Theme) === */
+:root {
+  /* Colors — Office Black Theme */
+  --bg-primary: #2b2b2b;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #333333;
+  --bg-canvas: #1e1e1e;
+  --bg-page: #ffffff;
+  
+  --text-primary: #ffffff;
+  --text-secondary: #d4d4d4;
+  --text-muted: #888888;
+  
+  --accent: #0078d4;
+  --accent-hover: #106ebe;
+  --accent-light: #203548;
+  
+  --border: #383838;
+  --border-light: #444444;
+  --border-dark: #262626;
+  
+  --danger: #d32f2f;
+  --success: #388e3c;
+  --warning: #f57c00;
+  
+  /* Sizes */
+  --toolbar-height: 40px;
+  --statusbar-height: 26px;
+  --panel-width: 250px;
+  --ruler-size: 25px;
+  
+  /* Fonts */
+  --font-main: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Consolas', 'Courier New', monospace;
+  --font-size-sm: 11px;
+  --font-size-base: 12px;
+  --font-size-lg: 14px;
+}
+
+/* === Reset === */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-main);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* === Global Layout === */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* === Canvas Area with scrollbars === */
+.canvas-area {
+  flex: 1;
+  display: grid;
+  grid-template-columns: var(--ruler-size) 1fr 16px;
+  grid-template-rows: var(--ruler-size) 1fr 28px;
+  overflow: hidden;
+  background: var(--bg-canvas);
+  position: relative;
+}
+
+.ruler-corner {
+  background: var(--bg-tertiary);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.ruler-h {
+  grid-row: 1;
+  grid-column: 2;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+  cursor: default;
+}
+
+.ruler-v {
+  grid-row: 2;
+  grid-column: 1;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  height: 100%;
+  cursor: default;
+}
+
+.canvas-container {
+  grid-row: 2;
+  grid-column: 2;
+  overflow: hidden;
+  position: relative;
+  cursor: default;
+  background: var(--bg-canvas);
+}
+
+.canvas-container canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* High-contrast custom cursors — visible over both dark canvas and pure white sheet */
+.canvas-container.tool-pan,
+.canvas-container.tool-pan canvas,
+.canvas-container.tool-pan .upper-canvas {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M10 5V3.5a1.5 1.5 0 0 1 3 0V7h.5a1.5 1.5 0 0 1 3 0v2h.5a1.5 1.5 0 0 1 3 0v4.5c0 3.5-3 6.5-6.5 6.5H13c-2.5 0-4.8-1.5-5.8-3.7l-2-4.5a1.5 1.5 0 0 1 2.7-1.3l1.1 2.5V5a1.5 1.5 0 0 1 1-1.5z' fill='%23ffffff' stroke='%23000000' stroke-width='2.2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") 10 10, grab !important;
+}
+
+.canvas-container.tool-insert,
+.canvas-container.tool-insert canvas,
+.canvas-container.tool-insert .upper-canvas {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round'/%3E%3Cline x1='2' y1='12' x2='22' y2='12' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round'/%3E%3Cline x1='12' y1='2' x2='12' y2='22' stroke='%23000000' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='2' y1='12' x2='22' y2='12' stroke='%23000000' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%23ffffff' stroke='%23000000' stroke-width='0.8'/%3E%3C/svg%3E") 12 12, crosshair !important;
+}
+
+/* === Vertical Scrollbar === */
+.canvas-scrollbar-v {
+  grid-row: 1 / 3;
+  grid-column: 3;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  width: 16px;
+  user-select: none;
+  z-index: 10;
+}
+
+.track-v {
+  flex: 1;
+  position: relative;
+  background: var(--bg-secondary);
+  cursor: pointer;
+}
+
+.thumb-v {
+  position: absolute;
+  left: 1px;
+  width: 13px;
+  background: var(--border-light);
+  border-radius: 7px;
+  min-height: 20px;
+  cursor: grab;
+  transition: background 0.1s;
+}
+
+.thumb-v:hover, .thumb-v:active {
+  background: var(--text-muted);
+}
+
+/* === Bottom Bar (Page Tabs + Horizontal Scrollbar) === */
+.canvas-bottom-bar {
+  grid-row: 3;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  height: 28px;
+  user-select: none;
+  z-index: 10;
+}
+
+.page-tabs {
+  display: flex;
+  align-items: flex-end;
+  background: transparent;
+  padding: 0 4px;
+  height: 100%;
+  overflow-x: auto;
+  gap: 3px;
+  max-width: 50%;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+}
+
+/* === Horizontal Scrollbar === */
+.canvas-scrollbar-h {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  background: var(--bg-secondary);
+  position: relative;
+}
+
+.track-h {
+  flex: 1;
+  position: relative;
+  height: 14px;
+  background: var(--bg-primary);
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.thumb-h {
+  position: absolute;
+  top: 1px;
+  height: 12px;
+  background: var(--border-light);
+  border-radius: 6px;
+  min-width: 24px;
+  cursor: grab;
+  transition: background 0.1s;
+}
+
+.thumb-h:hover, .thumb-h:active {
+  background: var(--text-muted);
+}
+
+.scrollbar-arrow {
+  background: none;
+  border: none;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.scrollbar-arrow:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.scrollbar-corner {
+  width: 16px;
+  height: 28px;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.page-tab {
+  padding: 3px 14px;
+  font-size: 11px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  height: 22px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.page-tab:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.page-tab.active {
+  background: #ffffff;
+  color: #1f1f1f;
+  font-weight: 600;
+  border-color: var(--border);
+  height: 24px;
+}
+
+.page-tab-add {
+  padding: 2px 8px;
+  font-size: 14px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  color: var(--text-muted);
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.page-tab-add:hover {
+  background: var(--accent-light);
+  border-color: var(--border);
+  color: var(--accent);
+}
+
+/* === Scrollbar Styling === */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* === Utility === */
+.hidden {
+  display: none !important;
+}
+
+kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-primary);
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: inset 0 -1px 0 var(--border-dark);
+}
+
+
