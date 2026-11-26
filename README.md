@@ -68,28 +68,6 @@ Press **`F1`** inside OpenDraw at any time to open the built-in Shortcuts Refere
 
 ---
 
-## Development & Building from Source
-
-Requires **Node.js** (LTS) and **Git**.
-
-```powershell
-# Install dependencies
-npm install
-
-# Run the app in development mode
-npm start
-# or with DevTools enabled:
-npm run dev
-
-# Run Visio compatibility tests
-npm run test:visio
-
-# Run version & privacy checks, then build the portable .exe into dist/
-npm run build:portable
-```
-
----
-
 ## Branching & Release Workflow
 
 This repository is set up for clean, traceable future development (see [`RELEASE_GUIDE.md`](RELEASE_GUIDE.md) and [`CHANGELOG.md`](CHANGELOG.md)):
